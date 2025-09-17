@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+    <title>Spicy Nyraa Video App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'telegram-bg': 'var(--tg-theme-bg-color, #18222d)',
+              'telegram-text': 'var(--tg-theme-text-color, #ffffff)',
+              'telegram-hint': 'var(--tg-theme-hint-color, #b1c3d5)',
+              'telegram-button': 'var(--tg-theme-button-color, #2481cc)',
+              'telegram-button-text': 'var(--tg-theme-button-text-color, #ffffff)',
+              'telegram-secondary-bg': 'var(--tg-theme-secondary-bg-color, #1f2d3a)',
+            }
+          }
+        }
+      }
+    </script>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/"
+  }
+}
+</script>
+</head>
+  <body class="bg-telegram-bg text-telegram-text font-sans antialiased overflow-hidden">
+    <div id="root" class="h-screen w-screen"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

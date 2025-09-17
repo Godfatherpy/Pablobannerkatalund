@@ -1,0 +1,5 @@
+{
+  "name": "Spicy Nyraa Video App",
+  "description": "A Telegram Mini App to browse, save, and watch video content from the SpicyNyraa bot. This app provides a fast, full-screen experience for exploring all available categories.",
+  "requestFramePermissions": []
+}
