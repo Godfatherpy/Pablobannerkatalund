@@ -7,7 +7,6 @@ import { VideoPlayer } from './components/VideoPlayer';
 import type { Video } from './types';
 import { useTelegram } from './useTelegram';
 import { api } from './services/api';
-import { Loader } from './components/Loader';
 
 type Page = 'home' | 'saved' | 'profile';
 
@@ -16,7 +15,6 @@ const App: React.FC = () => {
   const [activePage, setActivePage] = useState<Page>('home');
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [savedVideoUuids, setSavedVideoUuids] = useState<Set<string>>(new Set());
-  const [isReady, setIsReady] = useState(false);
 
   const fetchSavedUuids = useCallback(async () => {
     if (!telegram) return;
@@ -31,7 +29,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (telegram) {
-      fetchSavedUuids().finally(() => setIsReady(true));
+      fetchSavedUuids();
     }
   }, [telegram, fetchSavedUuids]);
   
@@ -68,14 +66,6 @@ const App: React.FC = () => {
   const handleClosePlayer = () => {
     setSelectedVideo(null);
   };
-  
-  if (!isReady) {
-      return (
-          <div className="h-full w-full flex items-center justify-center">
-              <Loader message="Connecting..." />
-          </div>
-      )
-  }
 
   const renderCurrentPage = () => {
     switch (activePage) {

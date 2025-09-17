@@ -1,7 +1,20 @@
-// NOTE: The backend URL is assumed to be served relative to the frontend.
-// If your backend is on a different domain, replace '/api' with the full URL,
-// e.g., 'https://your-backend.onrender.com/api'.
-const API_BASE_URL = 'https://ab-tu-dekh-beta.onrender.com/api';
+// Fix: Manually define types for import.meta.env to work around build environment issues.
+// This ensures the project can compile even if Vite's client types are not automatically discovered.
+declare global {
+  interface ImportMeta {
+    readonly env: {
+      readonly VITE_API_BASE_URL: string;
+    }
+  }
+}
+
+// The backend URL is now loaded from environment variables via Vite.
+// See the .env.example file for configuration.
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+if (!API_BASE_URL) {
+  throw new Error("Configuration error: VITE_API_BASE_URL is not defined. Please check your .env file.");
+}
 
 class ApiError extends Error {
   constructor(message: string, public status: number) {
