@@ -5,7 +5,7 @@ import { ProfilePage } from './pages/ProfilePage';
 import { BottomNav } from './components/BottomNav';
 import { VideoPlayer } from './components/VideoPlayer';
 import type { Video } from './types';
-import { useTelegram } from './hooks/useTelegram';
+import { useTelegram } from './useTelegram';
 import { api } from './services/api';
 import { Loader } from './components/Loader';
 

@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
-import { useTelegram } from '../hooks/useTelegram';
+import { useTelegram } from '../useTelegram';
 import { api } from '../services/api';
 import type { Video, Category } from '../types';
 import { Loader } from '../components/Loader';

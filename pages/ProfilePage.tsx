@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
-import { useTelegram } from '../hooks/useTelegram';
+import { useTelegram } from '../useTelegram';
 import { api } from '../services/api';
 import type { UserProfile } from '../types';
 import { Loader } from '../components/Loader';
