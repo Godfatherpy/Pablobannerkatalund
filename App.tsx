@@ -31,7 +31,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (telegram) {
-      fetchSavedUuids().then(() => setIsReady(true));
+      fetchSavedUuids().finally(() => setIsReady(true));
     }
   }, [telegram, fetchSavedUuids]);
   
