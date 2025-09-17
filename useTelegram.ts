@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import type { WebApp } from '../types';
+import type { WebApp } from './types';
 
 declare global {
   interface Window {
