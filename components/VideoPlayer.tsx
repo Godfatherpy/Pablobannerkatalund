@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import type { Video } from '../types';
 import { useTelegram } from '../useTelegram';
-import { api } from '../services/api';
+import { api, ApiError } from '../services/api';
 import { Loader } from './Loader';
 import { Icon } from './icons';
 import { ErrorMessage } from './ErrorMessage';
@@ -20,11 +20,13 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ video, onClose, onBook
   const [error, setError] = useState<string | null>(null);
   const [isBookmarked, setIsBookmarked] = useState(isInitiallyBookmarked);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [canRetry, setCanRetry] = useState(true);
 
   const fetchVideo = async () => {
     if (!telegram) return;
     setIsLoading(true);
     setError(null);
+    setCanRetry(true);
 
     try {
       /**
@@ -46,7 +48,12 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ video, onClose, onBook
       setVideoUrl(url);
     } catch (e: any) {
       console.error("Failed to load video:", e);
-      setError(e.message || "Could not load video. It may have been removed.");
+      if (e instanceof ApiError && (e.status === 403 || e.status === 402)) {
+        setError("You do not have access to this video. Please check your subscription or token balance.");
+        setCanRetry(false); // User cannot retry this action
+      } else {
+        setError(e.message || "Could not load video. It may have been removed.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -100,7 +107,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ video, onClose, onBook
 
       <div className="flex-grow flex items-center justify-center relative" onClick={handleVideoClick}>
         {isLoading && <Loader message="Loading video..." />}
-        {error && !isLoading && <ErrorMessage message={error} onRetry={fetchVideo} />}
+        {error && !isLoading && <ErrorMessage message={error} onRetry={canRetry ? fetchVideo : undefined} />}
         {videoUrl && !error && (
           <video
             ref={videoRef}
