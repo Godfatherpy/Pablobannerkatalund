@@ -7,8 +7,11 @@ import { VideoPlayer } from './components/VideoPlayer';
 import type { Video } from './types';
 import { useTelegram } from './useTelegram';
 import { api } from './services/api';
+import { ErrorMessage } from './components/ErrorMessage';
 
 type Page = 'home' | 'saved' | 'profile';
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const App: React.FC = () => {
   const telegram = useTelegram();
@@ -79,6 +82,14 @@ const App: React.FC = () => {
         return <HomePage onVideoSelect={handleVideoSelect} />;
     }
   };
+
+  if (!API_BASE_URL) {
+    return (
+      <div className="h-screen w-screen flex items-center justify-center p-4">
+        <ErrorMessage message="Application is not configured correctly. The backend URL is missing. Please contact support." />
+      </div>
+    );
+  }
 
   return (
     <div className="h-full w-full flex flex-col">

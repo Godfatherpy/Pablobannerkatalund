@@ -2,10 +2,6 @@
 // See the .env.example file for configuration.
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-if (!API_BASE_URL) {
-  throw new Error("Configuration error: VITE_API_BASE_URL is not defined. Please check your .env file.");
-}
-
 export class ApiError extends Error {
   constructor(message: string, public status: number) {
     super(message);
